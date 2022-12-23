@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052554209970",
+    "project_id": "diabets-monitor",
+    "storage_bucket": "diabets-monitor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052554209970:android:13a15202627645a03177ab",
+        "android_client_info": {
+          "package_name": "com.example.diabets_monitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052554209970-tm07urqt8lad14n49uitb23hagurdgh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBUi2sjl_Ht6ueZrL69g_QszPp_efp5r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052554209970-tm07urqt8lad14n49uitb23hagurdgh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
