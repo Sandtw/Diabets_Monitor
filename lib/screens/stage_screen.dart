@@ -1,3 +1,4 @@
+import 'package:diabets_monitor/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class StageScreen extends StatelessWidget {
@@ -6,9 +7,7 @@ class StageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: AppContainer(),
-      ),
+      body:  AppContainer(),
     );
   }
 }
@@ -22,26 +21,46 @@ class AppContainer extends StatefulWidget {
 
 class _AppContainerState extends State<AppContainer> {
   final List<String> menuItems = ['Iniciar Sesión', 'Registrar'];
-  final List<IconData> menuIcons = [Icons.login_outlined, Icons.logout_outlined, Icons.app_registration];
+  final List<IconData> menuIcons = [Icons.login_outlined, Icons.app_registration];
 
   bool siderbarOpen = false;
   double yOffset = 0;
   double xOffset = 0;
+  double pageScale = 1;
 
   int selectedMenuItem = 0;
+  String pageTitle = "Inicio de sesión";
+  Widget currentPage = LoginScreen();
+
+  void setPageTitle(){
+    switch(selectedMenuItem){
+      case 0:
+        pageTitle = "Inicio de sesión";
+        currentPage = LoginScreen();
+        break;
+      case 1: 
+        pageTitle = "Registrarse";
+        currentPage = RegisterScreen();
+        break;
+    }
+  }
 
   void setSidebarState(){
     setState(() {
       xOffset = siderbarOpen ? 265 : 60;
+      yOffset = siderbarOpen ? 130 : 0;
+      pageScale = siderbarOpen ? 0.7 : 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Stack(
         children: [
           Container(
+            color: Color(0xFFB1F2B36),
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,6 +76,7 @@ class _AppContainerState extends State<AppContainer> {
                             siderbarOpen = false;
                             selectedMenuItem = index;
                             setSidebarState();
+                            setPageTitle();
                           },
                           child: MenuItem(menuIcon: menuIcons[index], menuItem: menuItems[index], selected: selectedMenuItem, position: index,),
                         );
@@ -73,10 +93,13 @@ class _AppContainerState extends State<AppContainer> {
           AnimatedContainer(
               curve: Curves.easeInOut,
               duration: Duration(milliseconds: 200),
-              transform: Matrix4.translationValues(xOffset, yOffset, 1.0),
+              transform: Matrix4.translationValues(xOffset, yOffset, 1.0)..scale(pageScale),
               width: double.infinity,
               height: double.infinity,
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: siderbarOpen ? BorderRadius.circular(20) : BorderRadius.circular(0)
+              ),
               child: Column(
                 children: [
                   Container(
@@ -94,10 +117,18 @@ class _AppContainerState extends State<AppContainer> {
                             padding: EdgeInsets.all(20),
                             child: Icon(Icons.menu)
                           ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 20, bottom: 20),
+                          child: Text(pageTitle, style: TextStyle(fontSize: 18),),
+
                         )
                       ],
                     ),
-                  )
+                  ),
+                  Expanded(
+                    child: currentPage,
+                    ),
                 ],
               ),
             ),
@@ -127,7 +158,7 @@ class MenuItem extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(20),
-            child: Icon(menuIcon)),
+            child: Icon(menuIcon, color: Colors.white,)),
           Container(
             padding: const EdgeInsets.all(20),
             child: Text(

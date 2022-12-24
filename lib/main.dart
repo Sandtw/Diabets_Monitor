@@ -27,8 +27,12 @@ class MyApp extends StatelessWidget {
           '/start': (_) =>  StageScreen(),
           '/login': (_) => const LoginScreen(),
           '/register': (_) => RegisterScreen(),
-          '/home': (_) => HomeScreen()
         },
+        theme: ThemeData(
+          colorScheme: ThemeData().colorScheme.copyWith(
+                      primary:Colors.white,
+          ),
+        ),
       ),
     );
   }
