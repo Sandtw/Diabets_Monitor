@@ -1,4 +1,5 @@
 import 'package:diabets_monitor/services/auth_services.dart';
+import 'package:diabets_monitor/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:diabets_monitor/screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,8 +23,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Diabets Monitor App',
-        initialRoute: '/start',
+        initialRoute: '/',
         routes: {
+          '/': (_) => Wrapper(),
+          '/home': (_) => HomeScreen(),
           '/start': (_) =>  StageScreen(),
           '/login': (_) => const LoginScreen(),
           '/register': (_) => RegisterScreen(),
@@ -37,3 +40,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

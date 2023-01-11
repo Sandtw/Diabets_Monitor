@@ -54,6 +54,12 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   @override
+  void initState() {
+    setSidebarState();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     return Container(
@@ -84,9 +90,6 @@ class _AppContainerState extends State<AppContainer> {
                     ),
                   ),
                 ),
-                Container(
-                    child: MenuItem(menuIcon: Icons.logout_rounded, menuItem: "Logout", selected: selectedMenuItem, position: menuItems.length + 1,),
-                )
               ],
             ),
           ),

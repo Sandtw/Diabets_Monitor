@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:diabets_monitor/models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService{
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
-
+  final _firestoreRegister = FirebaseFirestore.instance;
+  
   //  Métodos para escuchar los cambios de estado de autenticación
   User? _userFromFirebase(auth.User? user){
     //* auth.User : El tipo de dato Usuario que maneja firebase_auth
@@ -26,8 +28,17 @@ class AuthService{
   }
 
   //? Intenta crear una nueva cuenta de usuario con la dirección de correo electrónico y la contraseña proporcionadas.
-  Future<User?> createUserWithEmailAndPassword(String email, String password) async {
+  Future<User?> createUserWithEmailAndPassword({required String firstName, required String lastName, required String email, required String password, required String phone, required String sex}) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+
+    await _firestoreRegister.collection("users").doc(credential.user!.uid).set({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'phone': phone,
+        'sex': sex
+      });
+
     return _userFromFirebase(credential.user);
   }
 
